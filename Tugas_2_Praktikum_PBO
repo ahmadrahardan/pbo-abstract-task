@@ -28,10 +28,9 @@ public abstract class Robot
 
 public class BosRobot : Robot
 {
-    public int Pertahanan { get; set; }
     public BosRobot(string nama, int energi, int armor, int serangan) : base(nama, energi, armor, serangan)
     {
-        Pertahanan = armor;
+        
     }
 
     public override void Serang(Robot target)
@@ -50,17 +49,17 @@ public class BosRobot : Robot
     public override void Diserang(Robot penyerang)
     {
         int damage = penyerang.Serangan;
-        if (Pertahanan > 0)
+        if (Armor > 0)
         {
-            if (damage > Pertahanan)
+            if (damage > Armor)
             {
-                int sisaDamage = damage - Pertahanan;
-                Pertahanan = 0;
+                int sisaDamage = damage - Armor;
+                Armor = 0;
                 Energi -= sisaDamage;
             }
             else
             {
-                Pertahanan -= damage;
+                Armor -= damage;
             }
         }
 
@@ -71,7 +70,7 @@ public class BosRobot : Robot
 
         if (Energi < 0) Energi = 0;
 
-        Console.WriteLine($"{Nama} menerima {damage} damage. Pertahanan tersisa: {Pertahanan}, Energi tersisa: {Energi}");
+        Console.WriteLine($"{Nama} menerima {damage} damage. Pertahanan tersisa: {Armor}, Energi tersisa: {Energi}");
     }
 
     public override void GunakanKemampuan(Kemampuan kemampuan, Robot target)
@@ -97,7 +96,7 @@ public class BosRobot : Robot
             Console.WriteLine();
             Console.WriteLine($"Nama       :{Nama}");
             Console.WriteLine($"Energi     :{Energi}");
-            Console.WriteLine($"Pertahanan :{Pertahanan}");
+            Console.WriteLine($"Pertahanan :{Armor}");
             Console.WriteLine($"Serangan   :{Serangan}");
             Console.WriteLine($"Stunned    :{Stunned}");
         }
@@ -364,6 +363,7 @@ public class Program
                 if (tempur.Energi > 0)
                 {
                     bool validAction = false;
+
                     while (!validAction)
                     {
                         Console.WriteLine();
